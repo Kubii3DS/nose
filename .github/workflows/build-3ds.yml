@@ -1,7 +1,7 @@
 name: Build 3DS CIA
 
 permissions:
-  contents: read
+  contents: write
 
 on:
   push:
@@ -138,6 +138,14 @@ jobs:
           name: opticraft-3ds
           path: OptiCraft-3ds.tar.gz
           if-no-files-found: error
+
+      - name: Save CIA as a private draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          tag_name: cia-${{ github.run_number }}
+          name: OptiCraft 3DS CIA #${{ github.run_number }}
+          files: bin/3ds/OptiCraft.cia
 
       - name: ccache stats
         if: always()
